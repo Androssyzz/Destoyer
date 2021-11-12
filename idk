@@ -1,25 +1,28 @@
-if game:GetService("CoreGui"):FindFirstChild("Library") then
-    game:GetService("CoreGui"):FindFirstChild("Library"):Destroy()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Khunny VIP", "DarkTheme")
+local Tab = Window:NewTab("Players")
+local Section = Tab:NewSection("Teleport")
+ 
+--------------------    
+ 
+players = {}
+ 
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+   table.insert(players,v.Name)
 end
-local VLib = loadstring(game:HttpGet("https://pastebin.com/raw/L7c0x6mW"))()
-MAINTTL = "KHUN HUB" 
-local win = VLib:Window("", Color3.fromRGB(196, 40, 28))
-local Main = win:Tab("Main")
-Main:Button("Destroy Gui",function()
-game.CoreGui["Library"]:Destroy()
+ 
+Section:NewDropdown("Select Player", " ", players, function(abc)
+    Select = abc
 end)
-
-Main:Dropdown("Dropdown",{"1","2","3"},function(Start)
+ 
+ 
+Section:NewButton("Refresh", " ", function()
+    table.clear(players)
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+   table.insert(players,v.Name)
+end
 end)
-
-Main:Toggle("Toggle",function(Start)
+ 
+Section:NewButton("Teleport", " ", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[Select].Character.HumanoidRootPart.CFrame
 end)
-
-Main:Slider("Slider",0,100,16,function(t)
-
-end)
-local cred = win:Tab("Misc")
-cred:Button("Copy Discord Server",function()
-setclipboard("https://discord.gg/DAymssmG")
-end)
-cred:Label("MADE BY : Androssy#8996")
